@@ -17,6 +17,7 @@ namespace Minesweeper.Game
         public ushort ColumnCoordinate { get; set; }
         public bool Mine { get; set; }
         public byte Status { get; private set; }
+
         private Tile[] _adjacentTiles;
         private Tile[] AdjacentTiles
         {
@@ -29,6 +30,24 @@ namespace Minesweeper.Game
                 return _adjacentTiles;
             }
         }
+
+        private sbyte _adjacentMines = -1;
+        public byte AdjacentMines
+        {
+            get
+            {
+                if (_adjacentMines < 0)
+                {
+                    _adjacentMines = 0;
+                    foreach (Tile tile in AdjacentTiles)
+                    {
+                        if (tile.Mine) _adjacentMines++;
+                    }
+                }
+                return (byte) _adjacentMines;
+            }
+        }
+
 
         public Tile(ushort rowCoordinate, ushort columnCoordinate)
         {
